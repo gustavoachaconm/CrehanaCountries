@@ -11,7 +11,7 @@ interface SearchBarProps {
 export const SearchBar: React.FC<SearchBarProps> = ({
   value,
   onChangeText,
-  placeholder = 'Search countries...',
+  placeholder = 'Buscar país por nombre...',
 }) => {
   const handleTextChange = useCallback((text: string) => {
     const sanitized = sanitizeLettersOnly(text);
