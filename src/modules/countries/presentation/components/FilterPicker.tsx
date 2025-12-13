@@ -26,16 +26,20 @@ export const FilterPicker: React.FC<FilterPickerProps> = ({
   useEffect(() => {
     if (isVisible && selectedValue && scrollViewRef.current && itemRefs.current[selectedValue]) {
       setTimeout(() => {
-        itemRefs.current[selectedValue]?.measureLayout(
-          scrollViewRef.current as any,
-          (x, y) => {
-            scrollViewRef.current?.scrollTo({
-              y: Math.max(0, y - 150),
-              animated: false,
-            });
-          },
-          () => {}
-        );
+        const scrollView = scrollViewRef.current;
+        const item = itemRefs.current[selectedValue];
+        if (scrollView && item) {
+          item.measureLayout(
+            scrollView as unknown as number,
+            (x, y) => {
+              scrollViewRef.current?.scrollTo({
+                y: Math.max(0, y - 150),
+                animated: false,
+              });
+            },
+            () => {}
+          );
+        }
       }, 100);
     }
   }, [isVisible, selectedValue]);

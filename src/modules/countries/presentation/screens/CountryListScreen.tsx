@@ -1,14 +1,16 @@
 import React from 'react';
 import { View, FlatList, Text, ActivityIndicator } from 'react-native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useCountries } from '../hooks/useCountries';
 import { useFilterOptions } from '../hooks/useFilterOptions';
 import { SearchBar } from '../components/SearchBar';
 import { FilterPicker } from '../components/FilterPicker';
 import { CountryListItem } from '../components/CountryListItem';
 import type { Country } from '../../domain/models';
+import type { RootStackParamList } from '../../../../core/navigation/types';
 
 interface CountryListScreenProps {
-  navigation: any;
+  navigation: NativeStackNavigationProp<RootStackParamList, 'CountryList'>;
 }
 
 export const CountryListScreen: React.FC<CountryListScreenProps> = ({ navigation }) => {

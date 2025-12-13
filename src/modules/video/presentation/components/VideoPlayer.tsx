@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet, ActivityIndicator, TouchableWithoutFeedback } from 'react-native';
-import Video from 'react-native-video';
+import { View, TouchableOpacity, Text, StyleSheet, ActivityIndicator, TouchableWithoutFeedback, GestureResponderEvent } from 'react-native';
+import Video, { VideoRef } from 'react-native-video';
 import type { VideoSource } from '../../domain/models';
 
 interface VideoPlayerProps {
@@ -8,7 +8,7 @@ interface VideoPlayerProps {
 }
 
 export const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
-  const videoRef = useRef<any>(null);
+  const videoRef = useRef<VideoRef>(null);
   const [paused, setPaused] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -31,11 +31,10 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
     }
   };
 
-  const handleSeek = (event: any) => {
+  const handleSeek = (event: GestureResponderEvent) => {
     if (source.isLive || !duration) return;
     
     const { locationX } = event.nativeEvent;
-    const progressBarWidth = event.nativeEvent.target.measure?.width || 0;
     
     event.currentTarget.measure((x: number, y: number, width: number) => {
       const percentage = locationX / width;
