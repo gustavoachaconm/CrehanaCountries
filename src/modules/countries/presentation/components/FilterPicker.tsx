@@ -33,12 +33,28 @@ export const FilterPicker: React.FC<FilterPickerProps> = ({
   return (
     <View className="flex-1 mx-2">
       <Text className="text-sm text-gray-600 mb-1">{label}</Text>
-      <TouchableOpacity
-        className="bg-white border border-gray-300 rounded-lg px-3 py-2"
-        onPress={() => setIsVisible(true)}
-      >
-        <Text className="text-base text-gray-900">{displayValue}</Text>
-      </TouchableOpacity>
+      <View className="bg-white border border-gray-300 rounded-lg">
+        <View className="flex-row items-center">
+          <TouchableOpacity
+            className="flex-1 px-3 py-2"
+            onPress={() => setIsVisible(true)}
+            activeOpacity={0.7}
+          >
+            <Text className="text-base text-gray-900">{displayValue}</Text>
+          </TouchableOpacity>
+          {selectedValue && (
+            <TouchableOpacity
+              className="px-3 py-2"
+              onPress={() => onSelect(null)}
+              activeOpacity={0.6}
+              accessibilityRole="button"
+              accessibilityLabel={`Clear ${label} filter`}
+            >
+              <Text className="text-gray-500 text-lg">×</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      </View>
 
       <Modal visible={isVisible} transparent animationType="fade">
         <TouchableOpacity
