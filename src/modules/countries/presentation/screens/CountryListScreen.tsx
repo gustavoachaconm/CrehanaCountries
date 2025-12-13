@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { View, FlatList, Text, ActivityIndicator } from 'react-native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useCountries } from '../hooks/useCountries';
@@ -25,9 +25,18 @@ export const CountryListScreen: React.FC<CountryListScreenProps> = ({ navigation
     setSearchQuery,
     setSelectedContinent,
     setSelectedCurrency,
+    refetch,
   } = useCountries();
 
+  const [refreshing, setRefreshing] = useState(false);
+
   const { continentOptions, currencyOptions } = useFilterOptions(selectedContinent, selectedCurrency);
+
+  const handleRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await refetch();
+    setRefreshing(false);
+  }, [refetch]);
 
   const handleCountryPress = useCallback((country: Country) => {
     navigation.navigate('CountryDetail', { country });
@@ -90,6 +99,8 @@ export const CountryListScreen: React.FC<CountryListScreenProps> = ({ navigation
         renderItem={renderItem}
         contentContainerClassName="py-2"
         ListEmptyComponent={ListEmptyComponent}
+        refreshing={refreshing}
+        onRefresh={handleRefresh}
       />
     </View>
   );
