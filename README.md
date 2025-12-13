@@ -1,97 +1,198 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# CrehanaCountries
 
-# Getting Started
+Aplicación móvil de React Native que muestra información de países consumiendo una API GraphQL, con reproductor de video HLS integrado.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## Arquitectura
 
-## Step 1: Start Metro
+El proyecto sigue una **arquitectura limpia monolítica modular por capas**, separando responsabilidades y facilitando mantenibilidad y testing.
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
-
-To start the Metro dev server, run the following command from the root of your React Native project:
-
-```sh
-# Using npm
-npm start
-
-# OR using Yarn
-yarn start
+## Estructura del proyecto
+```bash
+src/
+├── app/
+├── assets/
+│   └── icons/
+├── core/
+│   ├── components/
+│   ├── config/
+│   ├── hooks/
+│   │   └── __testUtils__/
+│   ├── navigation/
+│   └── utils/
+├── modules/
+│   ├── countries/
+│   │   ├── data/
+│   │   │   ├── graphql/
+│   │   │   ├── mappers/
+│   │   │   └── repositories/
+│   │   ├── di/
+│   │   ├── domain/
+│   │   │   ├── models/
+│   │   │   └── repositories/
+│   │   └── presentation/
+│   │       ├── components/
+│   │       ├── hooks/
+│   │       ├── screens/
+│   │       └── utils/
+│   └── video/
+│       ├── data/
+│       │   └── providers/
+│       ├── domain/
+│       │   └── models/
+│       └── presentation/
+│           ├── components/
+│           └── hooks/
+└── types/
 ```
 
-## Step 2: Build and run your app
+#### Principios Aplicados
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+- **Separation of Concerns**: Cada capa tiene una responsabilidad única
+- **Dependency Inversion**: Domain no depende de Data ni Presentation
+- **Single Responsibility**: Módulos pequeños y enfocados
+- **DRY**: Código compartido en `core/`
 
-### Android
+## Tech Stack
 
-```sh
-# Using npm
-npm run android
+### Core
 
-# OR using Yarn
-yarn android
+- **React Native** 0.83.0 (CLI, not Expo)
+- **TypeScript** - Strict typing
+- **React Navigation** 7.x (Native Stack)
+
+### State Management
+
+- **Zustand** 5.0.9 - Lightweight state management
+- Custom hooks pattern
+
+### Data Fetching
+
+- **Apollo Client** 3.x - GraphQL client
+- **GraphQL** - Countries API ([trevorblades.com](https://countries.trevorblades.com/graphql))
+
+### UI & Styling
+
+- **NativeWind** 4.2.1 - TailwindCSS for React Native
+- **React Native Video** 6.18.0 - HLS video playback
+
+## Requisitos Previos
+
+- Node.js >= 18
+- npm >= 9
+- React Native development environment configured
+- iOS: Xcode 15+ (macOS only)
+- Android: Android Studio & SDK
+
+## 🛠️ Instalación
+
+```bash
+# Clonar el repositorio
+git clone <repository-url>
+cd CrehanaCountries
+
+# Instalar dependencias
+npm install
 ```
 
-### iOS
+### Configuración (solo en macOS)
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
+```bash
+# Instalar Ruby bundler (solo primera vez)
 bundle install
+
+# Instalar CocoaPods dependencies
+cd ios && bundle exec pod install && cd ..
 ```
 
-Then, and every time you update your native dependencies, run:
+## Ejecución
 
-```sh
-bundle exec pod install
+### Iniciar Metro Bundler
+
+```bash
+npm start
 ```
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+### Compilar y Ejecutar
 
-```sh
-# Using npm
+#### Android
+
+```bash
+npm run android
+```
+
+#### iOS
+
+```bash
 npm run ios
-
-# OR using Yarn
-yarn ios
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+También puedes compilar desde **Android Studio** o **Xcode** directamente.
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+## Características
 
-## Step 3: Modify your app
+### Módulo Countries
 
-Now that you have successfully run the app, let's make changes!
+- **Lista de países** con información del GraphQL API
+- **Búsqueda** con debounce (300ms) y validación de solo letras
+- **Filtros bidireccionales** por continente y moneda
+- **Auto-scroll** a selección en modales de filtro
+- **Imágenes de banderas** con manejo de errores
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+### Módulo Video
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+- **Reproductor HLS** con controles personalizados
+- **Play/Pause** con estado visual
+- **Seek** en barra de progreso
+- **Pantalla completa**
+- **Live badge** para streams en vivo
+- **Navegación** entre múltiples videos
+- **Autoplay** al cargar
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+### UX/UI
 
-## Congratulations! :tada:
+- **NativeWind (TailwindCSS)** para estilos consistentes
+- **Tema centralizado** con color primario
+- **Internacionalización (i18n)** - Todos los textos en español
+- **Accesibilidad (a11y)** - Labels y hints para screen readers
 
-You've successfully run and modified your React Native App. :partying_face:
+## Performance Optimizations
 
-### Now what?
+- ✅ **React.memo** en componentes de lista
+- ✅ **useCallback** para handlers estables
+- ✅ **useMemo** para cálculos costosos
+- ✅ **Debounce** en búsqueda
+- ✅ **FlatList** con callbacks memoizados
+- ✅ **Lazy state initialization**
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+## Testing
 
-# Troubleshooting
+El proyecto incluye tests unitarios para asegurar la calidad de la lógica de negocio y utilidades clave:
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+- **Mappers**: Verifica la conversión de datos de la API GraphQL a modelos de dominio.
+- **Utils**: Pruebas para utilidades como la generación de URLs de banderas.
+- **Configuración**: Valida dependencias principales y setup de testing.
 
-# Learn More
+Los tests están ubicados en la carpeta `__tests__` y se ejecutan con:
 
-To learn more about React Native, take a look at the following resources:
+```bash
+npm test
+```
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+Todos los tests pasan exitosamente en la rama principal.
+
+## Scripts Disponibles
+
+```bash
+npm start          # Iniciar Metro bundler
+npm run android    # Compilar y ejecutar en Android
+npm run ios        # Compilar y ejecutar en iOS
+npm test           # Ejecutar tests
+npm run lint       # Ejecutar linter
+```
+
+## Screenshots
+
+| List | Search Bar | Filter | Details |
+|------|---------|---------|--------------|
+| <img src="assets/screenshots/CountriesList.png" width="260" /> | <img src="assets/screenshots/SearchBar.png" width="260" /> | <img src="assets/screenshots/ContinentFilter.png" width="260" /> | <img src="assets/screenshots/CountriesDetails.png" width="260" /> |
+
