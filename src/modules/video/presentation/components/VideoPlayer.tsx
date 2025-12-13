@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet, ActivityIndicator, TouchableWithoutFeedback } from 'react-native';
 import Video from 'react-native-video';
 import type { VideoSource } from '../../domain/models';
 
@@ -14,6 +14,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
   const [duration, setDuration] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [seeking, setSeeking] = useState(false);
 
   const handlePlayPause = () => {
     if (source.isLive && paused) {
@@ -22,6 +23,25 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
       }
     }
     setPaused(!paused);
+  };
+
+  const handleSeek = (event: any) => {
+    if (source.isLive || !duration) return;
+    
+    const { locationX } = event.nativeEvent;
+    const progressBarWidth = event.nativeEvent.target.measure?.width || 0;
+    
+    event.currentTarget.measure((x: number, y: number, width: number) => {
+      const percentage = locationX / width;
+      const seekTime = duration * percentage;
+      
+      setSeeking(true);
+      setCurrentTime(seekTime);
+      
+      if (videoRef.current) {
+        videoRef.current.seek(seekTime);
+      }
+    });
   };
 
   const formatTime = (seconds: number) => {
@@ -40,7 +60,11 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
         style={styles.video}
         paused={paused}
         resizeMode="cover"
-        onProgress={(data) => setCurrentTime(data.currentTime)}
+        onProgress={(data) => {
+          if (!seeking) {
+            setCurrentTime(data.currentTime);
+          }
+        }}
         onLoad={(data) => {
           setDuration(data.duration);
           setLoading(false);
@@ -52,6 +76,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
           setError(e.error?.errorString || 'Error al cargar el video');
           console.error('Video error:', e);
         }}
+        onSeek={() => setSeeking(false)}
       />
 
       {source.isLive && (
@@ -61,10 +86,10 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
         </View>
       )}
 
-      {loading && (
+      {(loading || seeking) && (
         <View className="absolute inset-0 items-center justify-center bg-black/50">
           <ActivityIndicator size="large" color="#6366f1" />
-          <Text className="text-white mt-3 font-semibold">Cargando video...</Text>
+          <Text className="text-white mt-3 font-semibold">Cargando...</Text>
         </View>
       )}
 
@@ -76,14 +101,16 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
 
       <View className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-4">
         {!source.isLive && (
-          <View className="mb-2">
-            <View className="bg-gray-700/50 h-1.5 rounded-full overflow-hidden">
-              <View
-                className="bg-indigo-500 h-1.5 rounded-full"
-                style={{ width: `${progress}%` }}
-              />
+          <TouchableWithoutFeedback onPress={handleSeek}>
+            <View className="mb-2">
+              <View className="bg-gray-700/50 h-1.5 rounded-full overflow-hidden">
+                <View
+                  className="bg-indigo-500 h-1.5 rounded-full"
+                  style={{ width: `${progress}%` }}
+                />
+              </View>
             </View>
-          </View>
+          </TouchableWithoutFeedback>
         )}
         
         <View className="flex-row items-center justify-between">
