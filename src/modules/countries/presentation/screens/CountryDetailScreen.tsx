@@ -1,5 +1,5 @@
-import React from 'react';
-import { ScrollView, View, Text, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { ScrollView, View, Text, Image, TouchableOpacity } from 'react-native';
 import type { Country } from '../../domain/models';
 import { VideoPlayer } from '../../../video/presentation/components/VideoPlayer';
 import { videoProvider } from '../../../video/data/providers/videoProvider';
@@ -14,7 +14,20 @@ interface CountryDetailScreenProps {
 
 export const CountryDetailScreen: React.FC<CountryDetailScreenProps> = ({ route }) => {
   const { country } = route.params;
-  const videoSource = videoProvider.getRandomVideo();
+  const allVideos = videoProvider.getAllVideos();
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(
+    Math.floor(Math.random() * allVideos.length)
+  );
+
+  const handlePrevious = () => {
+    setCurrentVideoIndex((prev) => (prev === 0 ? allVideos.length - 1 : prev - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentVideoIndex((prev) => (prev === allVideos.length - 1 ? 0 : prev + 1));
+  };
+
+  const currentVideo = allVideos[currentVideoIndex];
 
   return (
     <ScrollView className="flex-1 bg-gray-50">
@@ -72,12 +85,37 @@ export const CountryDetailScreen: React.FC<CountryDetailScreenProps> = ({ route 
 
       <View className="bg-white p-4 mb-4">
         <Text className="text-lg font-bold text-gray-900 mb-3 text-center">Reproductor de video</Text>
-        <VideoPlayer source={videoSource} />
-        <Text className="text-sm text-gray-600 mt-2">{videoSource.title}</Text>
-        {videoSource.description && (
-          <Text className="text-xs text-gray-500 mt-1">{videoSource.description}</Text>
+        <VideoPlayer source={currentVideo} />
+        
+        <View className="flex-row items-center justify-center mt-4 mb-3">
+          <TouchableOpacity
+            className="bg-indigo-100 rounded-full w-12 h-12 items-center justify-center active:bg-indigo-200"
+            onPress={handlePrevious}
+            activeOpacity={0.7}
+          >
+            <Text className="text-indigo-600 text-2xl font-bold">‹</Text>
+          </TouchableOpacity>
+          
+          <View className="mx-4 items-center">
+            <Text className="text-gray-600 text-xs">
+              {currentVideoIndex + 1} / {allVideos.length}
+            </Text>
+          </View>
+          
+          <TouchableOpacity
+            className="bg-indigo-100 rounded-full w-12 h-12 items-center justify-center active:bg-indigo-200"
+            onPress={handleNext}
+            activeOpacity={0.7}
+          >
+            <Text className="text-indigo-600 text-2xl font-bold">›</Text>
+          </TouchableOpacity>
+        </View>
+
+        <Text className="text-sm text-gray-600 mt-2">{currentVideo.title}</Text>
+        {currentVideo.description && (
+          <Text className="text-xs text-gray-500 mt-1">{currentVideo.description}</Text>
         )}
-        <Text className="text-xs text-gray-400 mt-0.5">{videoSource.uri}</Text>
+        <Text className="text-xs text-gray-400 mt-0.5">{currentVideo.uri}</Text>
       </View>
     </ScrollView>
   );
