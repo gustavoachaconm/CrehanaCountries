@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { ScrollView, View, Text, Image, TouchableOpacity } from 'react-native';
 import type { Country } from '../../domain/models';
 import { VideoPlayer } from '../../../video/presentation/components/VideoPlayer';
-import { videoProvider } from '../../../video/data/providers/videoProvider';
 import { getFlagUrl } from '../utils/flagUtils';
 import { colors } from '../../../../core/config/theme';
 import { strings } from '../../../../core/config/i18n';
+import { useVideoNavigation } from '../hooks/useVideoNavigation';
 
 interface CountryDetailScreenProps {
   route: {
@@ -17,21 +17,8 @@ interface CountryDetailScreenProps {
 
 export const CountryDetailScreen: React.FC<CountryDetailScreenProps> = ({ route }) => {
   const { country } = route.params;
-  const allVideos = videoProvider.getAllVideos();
-  const [currentVideoIndex, setCurrentVideoIndex] = useState(
-    Math.floor(Math.random() * allVideos.length)
-  );
+  const { currentVideo, currentVideoIndex, totalVideos, handlePrevious, handleNext } = useVideoNavigation();
   const [imageError, setImageError] = useState(false);
-
-  const handlePrevious = () => {
-    setCurrentVideoIndex((prev) => (prev === 0 ? allVideos.length - 1 : prev - 1));
-  };
-
-  const handleNext = () => {
-    setCurrentVideoIndex((prev) => (prev === allVideos.length - 1 ? 0 : prev + 1));
-  };
-
-  const currentVideo = allVideos[currentVideoIndex];
 
   return (
     <ScrollView className="flex-1 bg-gray-50">
@@ -106,7 +93,7 @@ export const CountryDetailScreen: React.FC<CountryDetailScreenProps> = ({ route 
           
           <View className="mx-4 items-center">
             <Text className="text-gray-600 text-xs">
-              {currentVideoIndex + 1} / {allVideos.length}
+              {currentVideoIndex + 1} / {totalVideos}
             </Text>
           </View>
           
