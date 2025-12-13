@@ -77,6 +77,7 @@ export const CountryDetailScreen: React.FC<CountryDetailScreenProps> = ({ route 
         {videoSource.description && (
           <Text className="text-xs text-gray-500 mt-1">{videoSource.description}</Text>
         )}
+        <Text className="text-xs text-gray-400 mt-1">{videoSource.uri}</Text>
       </View>
     </ScrollView>
   );
