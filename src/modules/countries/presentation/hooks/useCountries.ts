@@ -1,11 +1,8 @@
 import { useEffect } from 'react';
-import { apolloClient } from '../../../../core/config/apolloClient';
-import { CountryRepository } from '../../data/repositories/CountryRepository';
 import { useCountriesStore } from './useCountriesStore';
 import { strings } from '../../../../core/config/i18n';
 import { useDebounce } from '../../../../core/hooks/useDebounce';
-
-const countryRepository = new CountryRepository(apolloClient);
+import { countryRepository } from '../../di/dependencies';
 
 export const useCountries = () => {
   const {
