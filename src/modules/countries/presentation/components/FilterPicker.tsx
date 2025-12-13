@@ -83,7 +83,14 @@ export const FilterPicker: React.FC<FilterPickerProps> = ({
         >
           <TouchableOpacity activeOpacity={1} className="w-full">
             <View className="bg-white rounded-2xl overflow-hidden shadow-2xl">
-              <View style={{ backgroundColor: '#4b22f4' }} className="p-5">
+              <View style={{ backgroundColor: '#4b22f4' }} className="p-5 flex-row items-center justify-center">
+                <TouchableOpacity
+                  className="absolute left-6"
+                  onPress={() => setIsVisible(false)}
+                  activeOpacity={0.7}
+                >
+                  <Text className="text-white text-2xl font-bold">×</Text>
+                </TouchableOpacity>
                 <Text className="text-xl font-bold text-white text-center">{label}</Text>
               </View>
               <ScrollView ref={scrollViewRef} className="max-h-96">
