@@ -28,7 +28,7 @@ export const FilterPicker: React.FC<FilterPickerProps> = ({
 
   const displayValue = selectedValue
     ? options.find((opt) => opt.value === selectedValue)?.label
-    : 'All';
+    : 'Todos';
 
   return (
     <View className="flex-1 mx-2">
@@ -71,7 +71,7 @@ export const FilterPicker: React.FC<FilterPickerProps> = ({
                 className="p-4 border-b border-gray-100"
                 onPress={() => handleSelect(null)}
               >
-                <Text className="text-base text-gray-900 font-medium">All</Text>
+                <Text className="text-base text-gray-900 font-medium">Todos</Text>
               </TouchableOpacity>
               {options.map((option) => (
                 <TouchableOpacity
