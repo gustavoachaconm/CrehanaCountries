@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, View, Text } from 'react-native';
+import { ScrollView, View, Text, Image } from 'react-native';
 import type { Country } from '../../domain/models';
 import { VideoPlayer } from '../../../video/presentation/components/VideoPlayer';
 import { videoProvider } from '../../../video/data/providers/videoProvider';
@@ -18,8 +18,13 @@ export const CountryDetailScreen: React.FC<CountryDetailScreenProps> = ({ route 
 
   return (
     <ScrollView className="flex-1 bg-gray-50">
-      <View className="bg-white p-4 mb-4">
-        <Text className="text-2xl font-bold text-gray-900 mb-2">{country.name}</Text>
+      <View className="bg-white p-6 mb-4 items-center">
+        <Image
+          source={{ uri: `https://flagcdn.com/w320/${country.code.toLowerCase()}.png` }}
+          className="w-48 h-32 rounded-lg mb-4"
+          resizeMode="cover"
+        />
+        <Text className="text-2xl font-bold text-gray-900 text-center">{country.name}</Text>
       </View>
 
       <View className="bg-white p-4 mb-4">
