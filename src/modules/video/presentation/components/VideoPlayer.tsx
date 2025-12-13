@@ -9,7 +9,7 @@ interface VideoPlayerProps {
 
 export const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
   const videoRef = useRef<any>(null);
-  const [paused, setPaused] = useState(true);
+  const [paused, setPaused] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [loading, setLoading] = useState(false);
