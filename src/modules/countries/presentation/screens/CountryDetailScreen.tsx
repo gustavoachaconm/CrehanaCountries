@@ -20,12 +20,16 @@ export const CountryDetailScreen: React.FC<CountryDetailScreenProps> = ({ route 
     <ScrollView className="flex-1 bg-gray-50">
       <View className="bg-white p-4 mb-4">
         <Text className="text-2xl font-bold text-gray-900 mb-2">{country.name}</Text>
-        <Text className="text-lg text-gray-600">Code: {country.code}</Text>
       </View>
 
       <View className="bg-white p-4 mb-4">
         <Text className="text-lg font-bold text-gray-900 mb-3">Information</Text>
         
+        <View className="mb-2">
+          <Text className="text-sm font-semibold text-gray-700">Code</Text>
+          <Text className="text-base text-gray-900">{country.code}</Text>
+        </View>
+
         <View className="mb-2">
           <Text className="text-sm font-semibold text-gray-700">Continent</Text>
           <Text className="text-base text-gray-900">{country.continent.name}</Text>
