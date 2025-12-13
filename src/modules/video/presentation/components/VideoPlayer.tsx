@@ -25,6 +25,12 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
     setPaused(!paused);
   };
 
+  const handleFullscreen = () => {
+    if (videoRef.current) {
+      videoRef.current.presentFullscreenPlayer();
+    }
+  };
+
   const handleSeek = (event: any) => {
     if (source.isLive || !duration) return;
     
@@ -125,11 +131,22 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
             </Text>
           </TouchableOpacity>
 
-          {!source.isLive && (
-            <Text className="text-white text-sm font-medium">
-              {formatTime(currentTime)} / {formatTime(duration)}
-            </Text>
-          )}
+          <View className="flex-row items-center gap-3">
+            {!source.isLive && (
+              <Text className="text-white text-sm font-medium">
+                {formatTime(currentTime)} / {formatTime(duration)}
+              </Text>
+            )}
+            
+            <TouchableOpacity
+              className="bg-gray-700/70 rounded-lg px-3 py-2 active:bg-gray-600"
+              onPress={handleFullscreen}
+              disabled={loading || !!error}
+              activeOpacity={0.8}
+            >
+              <Text className="text-white text-xs font-bold">⛶</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </View>
