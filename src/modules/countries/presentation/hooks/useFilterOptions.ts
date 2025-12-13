@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useCountriesStore } from './useCountriesStore';
 
-export const useFilterOptions = () => {
+export const useFilterOptions = (selectedContinent?: string | null) => {
   const countries = useCountriesStore((state) => state.countries);
 
   const continentOptions = useMemo(() => {
@@ -18,7 +18,11 @@ export const useFilterOptions = () => {
 
   const currencyOptions = useMemo(() => {
     const currencies = new Set<string>();
-    countries.forEach((country) => {
+    const filteredCountries = selectedContinent
+      ? countries.filter(country => country.continent.code === selectedContinent)
+      : countries;
+    
+    filteredCountries.forEach((country) => {
       if (country.currency) {
         currencies.add(country.currency);
       }
@@ -26,7 +30,7 @@ export const useFilterOptions = () => {
     return Array.from(currencies)
       .map((currency) => ({ value: currency, label: currency }))
       .sort((a, b) => a.label.localeCompare(b.label));
-  }, [countries]);
+  }, [countries, selectedContinent]);
 
   return {
     continentOptions,
