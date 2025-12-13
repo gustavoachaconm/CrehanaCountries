@@ -5,6 +5,7 @@ const HLS_VIDEOS: VideoSource[] = [
     uri: 'https://www.bloomberg.com/media-manifest/streams/us.m3u8',
     title: 'Bloomberg TV',
     description: 'Noticias financieras y de negocios en vivo.',
+    isLive: true,
   },
   {
     uri: 'https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8',

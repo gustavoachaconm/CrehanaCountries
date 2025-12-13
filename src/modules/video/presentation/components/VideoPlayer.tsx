@@ -8,7 +8,7 @@ interface VideoPlayerProps {
 }
 
 export const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
-  const videoRef = useRef(null);
+  const videoRef = useRef<any>(null);
   const [paused, setPaused] = useState(true);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -16,6 +16,11 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
   const [error, setError] = useState<string | null>(null);
 
   const handlePlayPause = () => {
+    if (source.isLive && paused) {
+      if (videoRef.current) {
+        videoRef.current.seek(0);
+      }
+    }
     setPaused(!paused);
   };
 
@@ -49,6 +54,13 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
         }}
       />
 
+      {source.isLive && (
+        <View className="absolute top-3 left-3 bg-red-600 px-3 py-1.5 rounded-full flex-row items-center">
+          <View className="w-2 h-2 bg-white rounded-full mr-2" />
+          <Text className="text-white text-xs font-bold">EN VIVO</Text>
+        </View>
+      )}
+
       {loading && (
         <View className="absolute inset-0 items-center justify-center bg-black/50">
           <ActivityIndicator size="large" color="#6366f1" />
@@ -63,14 +75,16 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
       )}
 
       <View className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-4">
-        <View className="mb-2">
-          <View className="bg-gray-700/50 h-1.5 rounded-full overflow-hidden">
-            <View
-              className="bg-indigo-500 h-1.5 rounded-full"
-              style={{ width: `${progress}%` }}
-            />
+        {!source.isLive && (
+          <View className="mb-2">
+            <View className="bg-gray-700/50 h-1.5 rounded-full overflow-hidden">
+              <View
+                className="bg-indigo-500 h-1.5 rounded-full"
+                style={{ width: `${progress}%` }}
+              />
+            </View>
           </View>
-        </View>
+        )}
         
         <View className="flex-row items-center justify-between">
           <TouchableOpacity
@@ -84,9 +98,11 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
             </Text>
           </TouchableOpacity>
 
-          <Text className="text-white text-sm font-medium">
-            {formatTime(currentTime)} / {formatTime(duration)}
-          </Text>
+          {!source.isLive && (
+            <Text className="text-white text-sm font-medium">
+              {formatTime(currentTime)} / {formatTime(duration)}
+            </Text>
+          )}
         </View>
       </View>
     </View>
