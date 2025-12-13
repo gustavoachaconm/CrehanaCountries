@@ -12,8 +12,7 @@ export const CountryListItem: React.FC<CountryListItemProps> = ({ country, onPre
   const [imageError, setImageError] = useState(false);
 
   const imageUri = useMemo(() => {
-    const hash = country.code.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-    return `https://picsum.photos/seed/${hash}/80/80`;
+    return `https://flagcdn.com/w80/${country.code.toLowerCase()}.png`;
   }, [country.code]);
   
   return (
