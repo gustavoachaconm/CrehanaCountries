@@ -19,11 +19,7 @@ export const CountryListItem: React.FC<CountryListItemProps> = ({ country, onPre
           <Text className="text-lg font-bold text-gray-900">{country.name}</Text>
           <Text className="text-sm text-gray-600 mt-1">Código: {country.code}</Text>
           <Text className="text-sm text-gray-600">Continente: {country.continent.name}</Text>
-          {country.currency && (
-            <Text className="text-sm text-gray-600">Currency: {country.currency}</Text>
-          )}
         </View>
-        <Text className="text-2xl">{country.code === 'US' ? '🇺🇸' : '🌍'}</Text>
       </View>
     </TouchableOpacity>
   );
