@@ -3,6 +3,7 @@ import { ScrollView, View, Text, Image, TouchableOpacity } from 'react-native';
 import type { Country } from '../../domain/models';
 import { VideoPlayer } from '../../../video/presentation/components/VideoPlayer';
 import { videoProvider } from '../../../video/data/providers/videoProvider';
+import { getFlagUrl } from '../utils/flagUtils';
 
 interface CountryDetailScreenProps {
   route: {
@@ -35,7 +36,7 @@ export const CountryDetailScreen: React.FC<CountryDetailScreenProps> = ({ route 
       <View className="bg-white p-6 mb-4 items-center">
         {!imageError && (
           <Image
-            source={{ uri: `https://flagcdn.com/w320/${country.code.toLowerCase()}.png` }}
+            source={{ uri: getFlagUrl(country.code, 320) }}
             className="w-48 h-32 rounded-lg mb-4"
             resizeMode="cover"
             onError={() => setImageError(true)}

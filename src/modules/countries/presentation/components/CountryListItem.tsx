@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { TouchableOpacity, Text, View, Image, ActivityIndicator } from 'react-native';
 import type { Country } from '../../domain/models';
+import { getFlagUrl } from '../utils/flagUtils';
 
 interface CountryListItemProps {
   country: Country;
@@ -12,7 +13,7 @@ export const CountryListItem: React.FC<CountryListItemProps> = ({ country, onPre
   const [imageError, setImageError] = useState(false);
 
   const imageUri = useMemo(() => {
-    return `https://flagcdn.com/w160/${country.code.toLowerCase()}.png`;
+    return getFlagUrl(country.code, 160);
   }, [country.code]);
   
   return (
