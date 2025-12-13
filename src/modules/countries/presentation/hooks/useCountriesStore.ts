@@ -7,6 +7,7 @@ interface CountriesState {
   isLoading: boolean;
   error: string | null;
   searchQuery: string;
+  debouncedSearchQuery: string;
   selectedContinent: string | null;
   selectedCurrency: string | null;
   
@@ -14,6 +15,7 @@ interface CountriesState {
   setLoading: (isLoading: boolean) => void;
   setError: (error: string | null) => void;
   setSearchQuery: (query: string) => void;
+  setDebouncedSearchQuery: (query: string) => void;
   setSelectedContinent: (continent: string | null) => void;
   setSelectedCurrency: (currency: string | null) => void;
   applyFilters: () => void;
@@ -25,6 +27,7 @@ export const useCountriesStore = create<CountriesState>((set, get) => ({
   isLoading: false,
   error: null,
   searchQuery: '',
+  debouncedSearchQuery: '',
   selectedContinent: null,
   selectedCurrency: null,
 
@@ -37,8 +40,10 @@ export const useCountriesStore = create<CountriesState>((set, get) => ({
 
   setError: (error) => set({ error }),
 
-  setSearchQuery: (query) => {
-    set({ searchQuery: query });
+  setSearchQuery: (query) => set({ searchQuery: query }),
+
+  setDebouncedSearchQuery: (query) => {
+    set({ debouncedSearchQuery: query });
     get().applyFilters();
   },
 
@@ -53,12 +58,12 @@ export const useCountriesStore = create<CountriesState>((set, get) => ({
   },
 
   applyFilters: () => {
-    const { countries, searchQuery, selectedContinent, selectedCurrency } = get();
+    const { countries, debouncedSearchQuery, selectedContinent, selectedCurrency } = get();
     
     let filtered = countries;
 
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase();
+    if (debouncedSearchQuery) {
+      const query = debouncedSearchQuery.toLowerCase();
       filtered = filtered.filter((country) =>
         country.name.toLowerCase().includes(query) ||
         country.code.toLowerCase().includes(query)

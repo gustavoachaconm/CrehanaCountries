@@ -3,6 +3,7 @@ import { apolloClient } from '../../../../core/config/apolloClient';
 import { CountryRepository } from '../../data/repositories/CountryRepository';
 import { useCountriesStore } from './useCountriesStore';
 import { strings } from '../../../../core/config/i18n';
+import { useDebounce } from '../../../../core/hooks/useDebounce';
 
 const countryRepository = new CountryRepository(apolloClient);
 
@@ -18,9 +19,16 @@ export const useCountries = () => {
     setLoading,
     setError,
     setSearchQuery,
+    setDebouncedSearchQuery,
     setSelectedContinent,
     setSelectedCurrency,
   } = useCountriesStore();
+
+  const debouncedSearchQuery = useDebounce(searchQuery, 300);
+
+  useEffect(() => {
+    setDebouncedSearchQuery(debouncedSearchQuery);
+  }, [debouncedSearchQuery, setDebouncedSearchQuery]);
 
   useEffect(() => {
     loadCountries();
