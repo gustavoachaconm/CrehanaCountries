@@ -14,7 +14,7 @@ export const AppNavigator: React.FC = () => {
         initialRouteName="CountryList"
         screenOptions={{
           headerStyle: {
-            backgroundColor: '#3B82F6',
+            backgroundColor: '#4b22f4',
           },
           headerTintColor: '#FFFFFF',
           headerTitleStyle: {
@@ -25,12 +25,12 @@ export const AppNavigator: React.FC = () => {
         <Stack.Screen
           name="CountryList"
           component={CountryListScreen}
-          options={{ title: 'Countries' }}
+          options={{ title: 'Países' }}
         />
         <Stack.Screen
           name="CountryDetail"
           component={CountryDetailScreen}
-          options={{ title: 'Country Details' }}
+          options={{ title: 'Detalles del país' }}
         />
       </Stack.Navigator>
     </NavigationContainer>
