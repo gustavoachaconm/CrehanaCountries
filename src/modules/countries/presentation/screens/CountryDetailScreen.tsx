@@ -5,6 +5,7 @@ import { VideoPlayer } from '../../../video/presentation/components/VideoPlayer'
 import { videoProvider } from '../../../video/data/providers/videoProvider';
 import { getFlagUrl } from '../utils/flagUtils';
 import { colors } from '../../../../core/config/theme';
+import { strings } from '../../../../core/config/i18n';
 
 interface CountryDetailScreenProps {
   route: {
@@ -47,17 +48,17 @@ export const CountryDetailScreen: React.FC<CountryDetailScreenProps> = ({ route 
       </View>
 
       <View className="bg-white p-4 mb-4">
-        <Text className="text-lg font-bold text-gray-900 mb-3 text-center">Información</Text>
+        <Text className="text-lg font-bold text-gray-900 mb-3 text-center">{strings.countries.sections.information}</Text>
         
         <View className="flex-row mb-3 px-6">
           <View className="flex-1 pr-2">
             <View className="mb-3">
-              <Text className="text-sm font-semibold text-gray-700">Código:</Text>
+              <Text className="text-sm font-semibold text-gray-700">{strings.countries.fields.code}</Text>
               <Text className="text-base text-gray-900 font-bold">{country.code}</Text>
             </View>
 
             <View className="mb-3">
-              <Text className="text-sm font-semibold text-gray-700">Continente:</Text>
+              <Text className="text-sm font-semibold text-gray-700">{strings.countries.fields.continent}</Text>
               <Text className="text-base text-gray-900 font-bold">{country.continent.name}</Text>
             </View>
           </View>
@@ -65,14 +66,14 @@ export const CountryDetailScreen: React.FC<CountryDetailScreenProps> = ({ route 
           <View className="flex-1 pl-2">
             {country.capital && (
               <View className="mb-3">
-                <Text className="text-sm font-semibold text-gray-700">Capital:</Text>
+                <Text className="text-sm font-semibold text-gray-700">{strings.countries.fields.capital}</Text>
                 <Text className="text-base text-gray-900 font-bold">{country.capital}</Text>
               </View>
             )}
 
             {country.currency && (
               <View className="mb-3">
-                <Text className="text-sm font-semibold text-gray-700">Moneda:</Text>
+                <Text className="text-sm font-semibold text-gray-700">{strings.countries.fields.currency}</Text>
                 <Text className="text-base text-gray-900 font-bold">{country.currency}</Text>
               </View>
             )}
@@ -80,7 +81,7 @@ export const CountryDetailScreen: React.FC<CountryDetailScreenProps> = ({ route 
         </View>
 
         <View className="mb-2 px-6">
-          <Text className="text-sm font-semibold text-gray-700">Idiomas:</Text>
+          <Text className="text-sm font-semibold text-gray-700">{strings.countries.fields.languages}</Text>
           {country.languages.map((lang) => (
             <Text key={lang.code} className="text-base text-gray-900 font-bold">
               • {lang.name}
@@ -90,7 +91,7 @@ export const CountryDetailScreen: React.FC<CountryDetailScreenProps> = ({ route 
       </View>
 
       <View className="bg-white p-4 mb-4">
-        <Text className="text-lg font-bold text-gray-900 mb-3 text-center">Reproductor de video</Text>
+        <Text className="text-lg font-bold text-gray-900 mb-3 text-center">{strings.countries.sections.videoPlayer}</Text>
         <VideoPlayer source={currentVideo} />
         
         <View className="flex-row items-center justify-center mt-4 mb-3">

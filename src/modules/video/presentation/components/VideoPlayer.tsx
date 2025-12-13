@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, ActivityIndicator, TouchableWithoutFeedback, GestureResponderEvent } from 'react-native';
 import Video, { VideoRef } from 'react-native-video';
 import type { VideoSource } from '../../domain/models';
+import { strings } from '../../../../core/config/i18n';
 
 interface VideoPlayerProps {
   source: VideoSource;
@@ -87,20 +88,20 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
       {source.isLive && (
         <View className="absolute top-3 left-3 bg-red-600 px-3 py-1.5 rounded-full flex-row items-center">
           <View className="w-2 h-2 bg-white rounded-full mr-2" />
-          <Text className="text-white text-xs font-bold">EN VIVO</Text>
+          <Text className="text-white text-xs font-bold">{strings.video.live}</Text>
         </View>
       )}
 
       {(loading || seeking) && (
         <View className="absolute inset-0 items-center justify-center bg-black/50">
           <ActivityIndicator size="large" color="#6366f1" />
-          <Text className="text-white mt-3 font-semibold">Cargando...</Text>
+          <Text className="text-white mt-3 font-semibold">{strings.common.loading}</Text>
         </View>
       )}
 
       {error && (
         <View className="absolute inset-0 items-center justify-center bg-black/90">
-          <Text className="text-red-400 text-center px-6 text-sm">Error: {error}</Text>
+          <Text className="text-red-400 text-center px-6 text-sm">{strings.common.error}: {error}</Text>
         </View>
       )}
 

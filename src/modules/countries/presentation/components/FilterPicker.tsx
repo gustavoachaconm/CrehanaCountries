@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Modal } from 'react-native';
 import { colors } from '../../../../core/config/theme';
+import { strings } from '../../../../core/config/i18n';
 
 interface FilterOption {
   label: string;
@@ -52,7 +53,7 @@ export const FilterPicker: React.FC<FilterPickerProps> = ({
 
   const displayValue = selectedValue
     ? options.find((opt) => opt.value === selectedValue)?.label
-    : 'Todos';
+    : strings.common.all;
 
   return (
     <View className="flex-1 mx-2">

@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { TextInput, View, Vibration, Platform } from 'react-native';
 import { sanitizeLettersOnly, MAX_SEARCH_LENGTH } from '../../../../core/utils/textValidation';
+import { strings } from '../../../../core/config/i18n';
 
 interface SearchBarProps {
   value: string;
@@ -11,7 +12,7 @@ interface SearchBarProps {
 export const SearchBar: React.FC<SearchBarProps> = ({
   value,
   onChangeText,
-  placeholder = 'Buscar país por nombre...',
+  placeholder = strings.countries.searchPlaceholder,
 }) => {
   const handleTextChange = useCallback((text: string) => {
     const sanitized = sanitizeLettersOnly(text);

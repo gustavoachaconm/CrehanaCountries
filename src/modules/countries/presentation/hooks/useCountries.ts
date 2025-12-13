@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { apolloClient } from '../../../../core/config/apolloClient';
 import { CountryRepository } from '../../data/repositories/CountryRepository';
 import { useCountriesStore } from './useCountriesStore';
+import { strings } from '../../../../core/config/i18n';
 
 const countryRepository = new CountryRepository(apolloClient);
 
@@ -32,7 +33,7 @@ export const useCountries = () => {
       const countries = await countryRepository.getAll();
       setCountries(countries);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Error al cargar los países');
+      setError(err instanceof Error ? err.message : strings.countries.loadError);
     } finally {
       setLoading(false);
     }

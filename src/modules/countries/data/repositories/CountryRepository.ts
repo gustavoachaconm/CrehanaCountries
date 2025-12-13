@@ -4,6 +4,7 @@ import type { Country } from '../../domain/models';
 import type { CountriesQueryResponse, CountryQueryResponse } from '../graphql/types';
 import { GET_COUNTRIES, GET_COUNTRY_BY_CODE } from '../graphql/queries';
 import { countryMapper } from '../mappers/countryMapper';
+import { strings } from '../../../../core/config/i18n';
 
 export class CountryRepository implements ICountryRepository {
   constructor(private readonly apolloClient: ApolloClient) {}
@@ -20,7 +21,7 @@ export class CountryRepository implements ICountryRepository {
 
       return countryMapper.toDomainList(data.countries);
     } catch (error) {
-      throw new Error('Error de conexión. Por favor, verifica tu red.');
+      throw new Error(strings.countries.connectionError);
     }
   }
 
