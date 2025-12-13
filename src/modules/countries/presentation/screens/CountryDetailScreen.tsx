@@ -89,11 +89,12 @@ export const CountryDetailScreen: React.FC<CountryDetailScreenProps> = ({ route 
         
         <View className="flex-row items-center justify-center mt-4 mb-3">
           <TouchableOpacity
-            className="bg-indigo-100 rounded-full w-12 h-12 items-center justify-center active:bg-indigo-200"
+            className="rounded-full w-12 h-12 items-center justify-center"
+            style={{ backgroundColor: '#4b22f4' }}
             onPress={handlePrevious}
             activeOpacity={0.7}
           >
-            <Text className="text-indigo-600 text-2xl font-bold">‹</Text>
+            <Text className="text-white text-2xl font-bold">‹</Text>
           </TouchableOpacity>
           
           <View className="mx-4 items-center">
@@ -103,11 +104,12 @@ export const CountryDetailScreen: React.FC<CountryDetailScreenProps> = ({ route 
           </View>
           
           <TouchableOpacity
-            className="bg-indigo-100 rounded-full w-12 h-12 items-center justify-center active:bg-indigo-200"
+            className="rounded-full w-12 h-12 items-center justify-center"
+            style={{ backgroundColor: '#4b22f4' }}
             onPress={handleNext}
             activeOpacity={0.7}
           >
-            <Text className="text-indigo-600 text-2xl font-bold">›</Text>
+            <Text className="text-white text-2xl font-bold">›</Text>
           </TouchableOpacity>
         </View>
 
