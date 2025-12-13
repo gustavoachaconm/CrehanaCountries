@@ -12,7 +12,7 @@ export const CountryListItem: React.FC<CountryListItemProps> = ({ country, onPre
   const [imageError, setImageError] = useState(false);
 
   const imageUri = useMemo(() => {
-    return `https://flagcdn.com/w80/${country.code.toLowerCase()}.png`;
+    return `https://flagcdn.com/w160/${country.code.toLowerCase()}.png`;
   }, [country.code]);
   
   return (
@@ -27,7 +27,7 @@ export const CountryListItem: React.FC<CountryListItemProps> = ({ country, onPre
           <Text className="text-sm text-gray-600 mt-1">Código: <Text className="font-bold">{country.code}</Text></Text>
           <Text className="text-sm text-gray-600">Continente: <Text className="font-bold">{country.continent.name}</Text></Text>
         </View>
-        <View className="w-20 h-20 rounded-lg bg-gray-200 items-center justify-center overflow-hidden">
+        <View className="w-24 h-16 rounded-lg bg-gray-200 items-center justify-center overflow-hidden">
           {imageLoading && !imageError && (
             <ActivityIndicator size="small" color="#6366f1" />
           )}
@@ -36,7 +36,7 @@ export const CountryListItem: React.FC<CountryListItemProps> = ({ country, onPre
           )}
           <Image
             source={{ uri: imageUri }}
-            className="w-20 h-20 rounded-lg absolute"
+            className="w-24 h-16 rounded-lg absolute"
             onLoadStart={() => setImageLoading(true)}
             onLoadEnd={() => setImageLoading(false)}
             onError={() => {
