@@ -2,19 +2,19 @@ import type { VideoSource } from '../../domain/models';
 
 const HLS_VIDEOS: VideoSource[] = [
   {
-    uri: 'https://ntv1.cs.andrews.edu/hls/nasatv.m3u8',
-    title: 'NASA TV en Vivo',
-    description: 'Transmisión pública oficial de la NASA las 24 horas.',
+    uri: 'https://www.bloomberg.com/media-manifest/streams/us.m3u8',
+    title: 'Bloomberg TV',
+    description: 'Noticias financieras y de negocios en vivo.',
   },
   {
-    uri: 'https://liveprodapnortheast.global.ssl.fastly.net/btv/desktop/us_live.m3u8',
-    title: 'Bloomberg Global',
-    description: 'Cobertura internacional de economía, finanzas y mercados.',
+    uri: 'https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8',
+    title: 'Tears of Steel',
+    description: 'Cortometraje de ciencia ficción en alta calidad.',
   },
   {
-    uri: 'https://static.france24.com/live/F24_EN_LO_HLS/live_web.m3u8',
-    title: 'France 24 (Inglés)',
-    description: 'Noticias globales en vivo emitidas por France 24.',
+    uri: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
+    title: 'Big Buck Bunny',
+    description: 'Película animada de demostración.',
   },
 ];
 
