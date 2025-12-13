@@ -28,7 +28,7 @@ export const CountryDetailScreen: React.FC<CountryDetailScreenProps> = ({ route 
       </View>
 
       <View className="bg-white p-4 mb-4">
-        <Text className="text-lg font-bold text-gray-900 mb-3">Information</Text>
+        <Text className="text-lg font-bold text-gray-900 mb-3 text-center">Información</Text>
         
         <View className="flex-row mb-3">
           <View className="flex-1 pr-2">
