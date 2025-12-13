@@ -63,7 +63,7 @@ export const CountryListScreen: React.FC<CountryListScreenProps> = ({ navigation
       {isLoading ? (
         <View className="flex-1 justify-center items-center">
           <ActivityIndicator size="large" color="#3B82F6" />
-          <Text className="text-gray-600 mt-2">Loading countries...</Text>
+          <Text className="text-gray-600 mt-2">Cargando países...</Text>
         </View>
       ) : (
         <FlatList
