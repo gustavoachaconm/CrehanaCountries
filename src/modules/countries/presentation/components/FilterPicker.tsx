@@ -67,12 +67,6 @@ export const FilterPicker: React.FC<FilterPickerProps> = ({
               <Text className="text-lg font-bold">{label}</Text>
             </View>
             <ScrollView className="max-h-80">
-              <TouchableOpacity
-                className="p-4 border-b border-gray-100"
-                onPress={() => handleSelect(null)}
-              >
-                <Text className="text-base text-gray-900 font-medium">Todos</Text>
-              </TouchableOpacity>
               {options.map((option) => (
                 <TouchableOpacity
                   key={option.value}
