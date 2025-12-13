@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Modal } from 'react-native';
+import { colors } from '../../../../core/config/theme';
 
 interface FilterOption {
   label: string;
@@ -87,7 +88,7 @@ export const FilterPicker: React.FC<FilterPickerProps> = ({
         >
           <TouchableOpacity activeOpacity={1} className="w-full">
             <View className="bg-white rounded-2xl overflow-hidden shadow-2xl">
-              <View style={{ backgroundColor: '#4b22f4' }} className="p-5 flex-row items-center justify-center">
+              <View style={{ backgroundColor: colors.primary }} className="p-5 flex-row items-center justify-center">
                 <TouchableOpacity
                   className="absolute left-6"
                   onPress={() => setIsVisible(false)}

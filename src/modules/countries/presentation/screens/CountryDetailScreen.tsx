@@ -4,6 +4,7 @@ import type { Country } from '../../domain/models';
 import { VideoPlayer } from '../../../video/presentation/components/VideoPlayer';
 import { videoProvider } from '../../../video/data/providers/videoProvider';
 import { getFlagUrl } from '../utils/flagUtils';
+import { colors } from '../../../../core/config/theme';
 
 interface CountryDetailScreenProps {
   route: {
@@ -95,7 +96,7 @@ export const CountryDetailScreen: React.FC<CountryDetailScreenProps> = ({ route 
         <View className="flex-row items-center justify-center mt-4 mb-3">
           <TouchableOpacity
             className="rounded-full w-12 h-12 items-center justify-center"
-            style={{ backgroundColor: '#4b22f4' }}
+            style={{ backgroundColor: colors.primary }}
             onPress={handlePrevious}
             activeOpacity={0.7}
           >
@@ -110,7 +111,7 @@ export const CountryDetailScreen: React.FC<CountryDetailScreenProps> = ({ route 
           
           <TouchableOpacity
             className="rounded-full w-12 h-12 items-center justify-center"
-            style={{ backgroundColor: '#4b22f4' }}
+            style={{ backgroundColor: colors.primary }}
             onPress={handleNext}
             activeOpacity={0.7}
           >

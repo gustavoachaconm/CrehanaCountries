@@ -5,6 +5,7 @@ import { CountryListScreen } from '../../modules/countries/presentation/screens/
 import { CountryDetailScreen } from '../../modules/countries/presentation/screens/CountryDetailScreen';
 import { CustomBackButton } from '../components/BackButton';
 import type { RootStackParamList } from './types';
+import { colors } from '../config/theme';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -15,7 +16,7 @@ export const AppNavigator: React.FC = () => {
         initialRouteName="CountryList"
         screenOptions={{
           headerStyle: {
-            backgroundColor: '#4b22f4',
+            backgroundColor: colors.primary,
           },
           headerTintColor: '#FFFFFF',
           headerTitleStyle: {
