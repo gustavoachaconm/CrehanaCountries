@@ -75,7 +75,7 @@ export const CountryListScreen: React.FC<CountryListScreenProps> = ({ navigation
           contentContainerClassName="py-2"
           ListEmptyComponent={
             <View className="flex-1 justify-center items-center py-20">
-              <Text className="text-gray-500 text-base">No countries found</Text>
+              <Text className="text-gray-500 text-base">No se encontraron países</Text>
             </View>
           }
         />
