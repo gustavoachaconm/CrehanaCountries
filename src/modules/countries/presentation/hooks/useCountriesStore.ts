@@ -73,7 +73,7 @@ export const useCountriesStore = create<CountriesState>((set, get) => ({
 
     if (selectedCurrency) {
       filtered = filtered.filter(
-        (country) => country.currency === selectedCurrency
+        (country) => country.currency?.includes(selectedCurrency)
       );
     }
 
