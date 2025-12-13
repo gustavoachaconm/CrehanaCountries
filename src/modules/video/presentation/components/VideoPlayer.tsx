@@ -28,7 +28,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
   const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   return (
-    <View className="bg-black rounded-lg overflow-hidden">
+    <View className="bg-black rounded-xl overflow-hidden shadow-lg">
       <Video
         ref={videoRef}
         source={{ uri: source.uri }}
@@ -50,40 +50,41 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
       />
 
       {loading && (
-        <View className="absolute inset-0 items-center justify-center">
-          <ActivityIndicator size="large" color="#ffffff" />
-          <Text className="text-white mt-2">Cargando video...</Text>
+        <View className="absolute inset-0 items-center justify-center bg-black/50">
+          <ActivityIndicator size="large" color="#6366f1" />
+          <Text className="text-white mt-3 font-semibold">Cargando video...</Text>
         </View>
       )}
 
       {error && (
-        <View className="absolute inset-0 items-center justify-center bg-black/80">
-          <Text className="text-red-400 text-center px-4">Error: {error}</Text>
+        <View className="absolute inset-0 items-center justify-center bg-black/90">
+          <Text className="text-red-400 text-center px-6 text-sm">Error: {error}</Text>
         </View>
       )}
 
-      <View className="absolute bottom-0 left-0 right-0 bg-black/70 p-3">
-        <View className="flex-row items-center">
+      <View className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-4">
+        <View className="mb-2">
+          <View className="bg-gray-700/50 h-1.5 rounded-full overflow-hidden">
+            <View
+              className="bg-indigo-500 h-1.5 rounded-full"
+              style={{ width: `${progress}%` }}
+            />
+          </View>
+        </View>
+        
+        <View className="flex-row items-center justify-between">
           <TouchableOpacity
-            className="bg-white/90 rounded-full w-10 h-10 items-center justify-center"
+            className="bg-indigo-600 rounded-full w-12 h-12 items-center justify-center shadow-lg active:bg-indigo-700"
             onPress={handlePlayPause}
             disabled={loading || !!error}
+            activeOpacity={0.8}
           >
-            <Text className="text-black text-base font-bold">
+            <Text className="text-white text-lg font-bold">
               {paused ? '▶' : '⏸'}
             </Text>
           </TouchableOpacity>
 
-          <View className="flex-1 mx-3">
-            <View className="bg-gray-600 h-1 rounded-full">
-              <View
-                className="bg-blue-500 h-1 rounded-full"
-                style={{ width: `${progress}%` }}
-              />
-            </View>
-          </View>
-
-          <Text className="text-white text-xs">
+          <Text className="text-white text-sm font-medium">
             {formatTime(currentTime)} / {formatTime(duration)}
           </Text>
         </View>
@@ -95,6 +96,6 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
 const styles = StyleSheet.create({
   video: {
     width: '100%',
-    height: 200,
+    height: 240,
   },
 });
