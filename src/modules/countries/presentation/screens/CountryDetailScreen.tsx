@@ -34,12 +34,12 @@ export const CountryDetailScreen: React.FC<CountryDetailScreenProps> = ({ route 
           <View className="flex-1 pr-2">
             <View className="mb-3">
               <Text className="text-sm font-semibold text-gray-700">Code:</Text>
-              <Text className="text-base text-gray-900">{country.code}</Text>
+              <Text className="text-base text-gray-900 font-bold">{country.code}</Text>
             </View>
 
             <View className="mb-3">
               <Text className="text-sm font-semibold text-gray-700">Continent:</Text>
-              <Text className="text-base text-gray-900">{country.continent.name}</Text>
+              <Text className="text-base text-gray-900 font-bold">{country.continent.name}</Text>
             </View>
           </View>
 
@@ -47,14 +47,14 @@ export const CountryDetailScreen: React.FC<CountryDetailScreenProps> = ({ route 
             {country.capital && (
               <View className="mb-3">
                 <Text className="text-sm font-semibold text-gray-700">Capital:</Text>
-                <Text className="text-base text-gray-900">{country.capital}</Text>
+                <Text className="text-base text-gray-900 font-bold">{country.capital}</Text>
               </View>
             )}
 
             {country.currency && (
               <View className="mb-3">
                 <Text className="text-sm font-semibold text-gray-700">Currency:</Text>
-                <Text className="text-base text-gray-900">{country.currency}</Text>
+                <Text className="text-base text-gray-900 font-bold">{country.currency}</Text>
               </View>
             )}
           </View>
@@ -63,7 +63,7 @@ export const CountryDetailScreen: React.FC<CountryDetailScreenProps> = ({ route 
         <View className="mb-2">
           <Text className="text-sm font-semibold text-gray-700">Languages:</Text>
           {country.languages.map((lang) => (
-            <Text key={lang.code} className="text-base text-gray-900">
+            <Text key={lang.code} className="text-base text-gray-900 font-bold">
               • {lang.name}
             </Text>
           ))}
