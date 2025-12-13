@@ -71,7 +71,7 @@ export const CountryDetailScreen: React.FC<CountryDetailScreenProps> = ({ route 
       </View>
 
       <View className="bg-white p-4 mb-4">
-        <Text className="text-lg font-bold text-gray-900 mb-3">Featured Video</Text>
+        <Text className="text-lg font-bold text-gray-900 mb-3 text-center">Reproductor de video</Text>
         <VideoPlayer source={videoSource} />
         <Text className="text-sm text-gray-600 mt-2">{videoSource.title}</Text>
         {videoSource.description && (
