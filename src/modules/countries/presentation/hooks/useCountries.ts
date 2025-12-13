@@ -32,7 +32,7 @@ export const useCountries = () => {
       const countries = await countryRepository.getAll();
       setCountries(countries);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Error loading countries');
+      setError(err instanceof Error ? err.message : 'Error al cargar los países');
     } finally {
       setLoading(false);
     }

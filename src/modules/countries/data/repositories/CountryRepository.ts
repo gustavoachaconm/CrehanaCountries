@@ -9,15 +9,19 @@ export class CountryRepository implements ICountryRepository {
   constructor(private readonly apolloClient: ApolloClient) {}
 
   async getAll(): Promise<Country[]> {
-    const { data } = await this.apolloClient.query<CountriesQueryResponse>({
-      query: GET_COUNTRIES,
-    });
+    try {
+      const { data } = await this.apolloClient.query<CountriesQueryResponse>({
+        query: GET_COUNTRIES,
+      });
 
-    if (!data) {
-      return [];
+      if (!data) {
+        return [];
+      }
+
+      return countryMapper.toDomainList(data.countries);
+    } catch (error) {
+      throw new Error('Error de conexión. Por favor, verifica tu red.');
     }
-
-    return countryMapper.toDomainList(data.countries);
   }
 
   async getByCode(code: string): Promise<Country | null> {
