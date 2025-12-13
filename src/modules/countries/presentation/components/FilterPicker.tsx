@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Modal } from 'react-native';
 
 interface FilterOption {
@@ -20,6 +20,25 @@ export const FilterPicker: React.FC<FilterPickerProps> = ({
   onSelect,
 }) => {
   const [isVisible, setIsVisible] = React.useState(false);
+  const scrollViewRef = useRef<ScrollView>(null);
+  const itemRefs = useRef<{ [key: string]: View | null }>({});
+
+  useEffect(() => {
+    if (isVisible && selectedValue && scrollViewRef.current && itemRefs.current[selectedValue]) {
+      setTimeout(() => {
+        itemRefs.current[selectedValue]?.measureLayout(
+          scrollViewRef.current as any,
+          (x, y) => {
+            scrollViewRef.current?.scrollTo({
+              y: Math.max(0, y - 150),
+              animated: false,
+            });
+          },
+          () => {}
+        );
+      }, 100);
+    }
+  }, [isVisible, selectedValue]);
 
   const handleSelect = (value: string | null) => {
     onSelect(value);
@@ -67,24 +86,30 @@ export const FilterPicker: React.FC<FilterPickerProps> = ({
               <View style={{ backgroundColor: '#4b22f4' }} className="p-5">
                 <Text className="text-xl font-bold text-white text-center">{label}</Text>
               </View>
-              <ScrollView className="max-h-96">
+              <ScrollView ref={scrollViewRef} className="max-h-96">
                 {options.map((option, index) => (
-                  <TouchableOpacity
+                  <View
                     key={option.value}
-                    className={`p-4 ${index < options.length - 1 ? 'border-b border-gray-100' : ''}`}
-                    onPress={() => handleSelect(option.value)}
-                    activeOpacity={0.7}
+                    ref={(ref) => {
+                      itemRefs.current[option.value] = ref;
+                    }}
                   >
-                    <Text
-                      className={`text-base text-center ${
-                        selectedValue === option.value
-                          ? 'text-indigo-600 font-bold'
-                          : 'text-gray-700'
-                      }`}
+                    <TouchableOpacity
+                      className={`p-4 ${index < options.length - 1 ? 'border-b border-gray-100' : ''}`}
+                      onPress={() => handleSelect(option.value)}
+                      activeOpacity={0.7}
                     >
-                      {option.label}
-                    </Text>
-                  </TouchableOpacity>
+                      <Text
+                        className={`text-base text-center ${
+                          selectedValue === option.value
+                            ? 'text-indigo-600 font-bold'
+                            : 'text-gray-700'
+                        }`}
+                      >
+                        {option.label}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
                 ))}
               </ScrollView>
             </View>
