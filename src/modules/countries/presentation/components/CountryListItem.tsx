@@ -21,6 +21,9 @@ export const CountryListItem = React.memo<CountryListItemProps>(({ country, onPr
       className="bg-white p-4 mb-2 mx-4 rounded-lg shadow-sm border border-gray-200"
       onPress={() => onPress(country)}
       activeOpacity={0.7}
+      accessibilityRole="button"
+      accessibilityLabel={`Ver detalles de ${country.name}`}
+      accessibilityHint={`Abre información detallada sobre ${country.name}`}
     >
       <View className="flex-row justify-between items-start">
         <View className="flex-1 pr-3">
@@ -44,6 +47,7 @@ export const CountryListItem = React.memo<CountryListItemProps>(({ country, onPr
               setImageLoading(false);
               setImageError(true);
             }}
+            accessibilityLabel={`Bandera de ${country.name}`}
           />
         </View>
       </View>

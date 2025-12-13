@@ -29,6 +29,7 @@ export const CountryDetailScreen: React.FC<CountryDetailScreenProps> = ({ route 
             className="w-48 h-32 rounded-lg mb-4"
             resizeMode="cover"
             onError={() => setImageError(true)}
+            accessibilityLabel={`Bandera de ${country.name}`}
           />
         )}
         <Text className="text-2xl font-bold text-gray-900 text-center">{country.name}</Text>
@@ -87,6 +88,9 @@ export const CountryDetailScreen: React.FC<CountryDetailScreenProps> = ({ route 
             style={{ backgroundColor: colors.primary }}
             onPress={handlePrevious}
             activeOpacity={0.7}
+            accessibilityRole="button"
+            accessibilityLabel="Video anterior"
+            accessibilityHint="Navega al video anterior en la lista"
           >
             <Text className="text-white text-2xl font-bold">‹</Text>
           </TouchableOpacity>
@@ -102,6 +106,9 @@ export const CountryDetailScreen: React.FC<CountryDetailScreenProps> = ({ route 
             style={{ backgroundColor: colors.primary }}
             onPress={handleNext}
             activeOpacity={0.7}
+            accessibilityRole="button"
+            accessibilityLabel="Siguiente video"
+            accessibilityHint="Navega al siguiente video en la lista"
           >
             <Text className="text-white text-2xl font-bold">›</Text>
           </TouchableOpacity>

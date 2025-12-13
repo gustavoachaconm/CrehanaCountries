@@ -85,6 +85,9 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
             onPress={handlePlayPause}
             disabled={loading || !!error}
             activeOpacity={0.8}
+            accessibilityRole="button"
+            accessibilityLabel={paused ? 'Reproducir video' : 'Pausar video'}
+            accessibilityState={{ disabled: loading || !!error }}
           >
             <Text className="text-white text-xl font-bold">
               {paused ? '▶' : '❚❚'}
