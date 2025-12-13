@@ -58,34 +58,37 @@ export const FilterPicker: React.FC<FilterPickerProps> = ({
 
       <Modal visible={isVisible} transparent animationType="fade">
         <TouchableOpacity
-          className="flex-1 bg-black/50 justify-center items-center"
+          className="flex-1 bg-black/50 justify-center items-center px-6"
           activeOpacity={1}
           onPress={() => setIsVisible(false)}
         >
-          <View className="bg-white rounded-lg w-4/5 max-h-96">
-            <View className="p-4 border-b border-gray-200">
-              <Text className="text-lg font-bold">{label}</Text>
-            </View>
-            <ScrollView className="max-h-80">
-              {options.map((option) => (
-                <TouchableOpacity
-                  key={option.value}
-                  className="p-4 border-b border-gray-100"
-                  onPress={() => handleSelect(option.value)}
-                >
-                  <Text
-                    className={`text-base ${
-                      selectedValue === option.value
-                        ? 'text-blue-600 font-bold'
-                        : 'text-gray-900'
-                    }`}
+          <TouchableOpacity activeOpacity={1} className="w-full">
+            <View className="bg-white rounded-2xl overflow-hidden shadow-2xl">
+              <View style={{ backgroundColor: '#4b22f4' }} className="p-5">
+                <Text className="text-xl font-bold text-white text-center">{label}</Text>
+              </View>
+              <ScrollView className="max-h-96">
+                {options.map((option, index) => (
+                  <TouchableOpacity
+                    key={option.value}
+                    className={`p-4 ${index < options.length - 1 ? 'border-b border-gray-100' : ''}`}
+                    onPress={() => handleSelect(option.value)}
+                    activeOpacity={0.7}
                   >
-                    {option.label}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
-          </View>
+                    <Text
+                      className={`text-base text-center ${
+                        selectedValue === option.value
+                          ? 'text-indigo-600 font-bold'
+                          : 'text-gray-700'
+                      }`}
+                    >
+                      {option.label}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </ScrollView>
+            </View>
+          </TouchableOpacity>
         </TouchableOpacity>
       </Modal>
     </View>
