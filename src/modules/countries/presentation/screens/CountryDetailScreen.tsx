@@ -18,6 +18,7 @@ export const CountryDetailScreen: React.FC<CountryDetailScreenProps> = ({ route 
   const [currentVideoIndex, setCurrentVideoIndex] = useState(
     Math.floor(Math.random() * allVideos.length)
   );
+  const [imageError, setImageError] = useState(false);
 
   const handlePrevious = () => {
     setCurrentVideoIndex((prev) => (prev === 0 ? allVideos.length - 1 : prev - 1));
@@ -32,11 +33,14 @@ export const CountryDetailScreen: React.FC<CountryDetailScreenProps> = ({ route 
   return (
     <ScrollView className="flex-1 bg-gray-50">
       <View className="bg-white p-6 mb-4 items-center">
-        <Image
-          source={{ uri: `https://flagcdn.com/w320/${country.code.toLowerCase()}.png` }}
-          className="w-48 h-32 rounded-lg mb-4"
-          resizeMode="cover"
-        />
+        {!imageError && (
+          <Image
+            source={{ uri: `https://flagcdn.com/w320/${country.code.toLowerCase()}.png` }}
+            className="w-48 h-32 rounded-lg mb-4"
+            resizeMode="cover"
+            onError={() => setImageError(true)}
+          />
+        )}
         <Text className="text-2xl font-bold text-gray-900 text-center">{country.name}</Text>
       </View>
 
