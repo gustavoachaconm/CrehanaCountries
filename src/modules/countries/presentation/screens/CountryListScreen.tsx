@@ -53,6 +53,15 @@ export const CountryListScreen: React.FC<CountryListScreenProps> = ({ navigation
     );
   }
 
+  if (isLoading && countries.length === 0) {
+    return (
+      <View className="flex-1 justify-center items-center bg-gray-50">
+        <ActivityIndicator size="large" color="#3B82F6" />
+        <Text className="text-gray-600 mt-2">{strings.countries.loadingCountries}</Text>
+      </View>
+    );
+  }
+
   return (
     <View className="flex-1 bg-gray-50">
       <SearchBar
@@ -75,20 +84,13 @@ export const CountryListScreen: React.FC<CountryListScreenProps> = ({ navigation
         />
       </View>
 
-      {isLoading ? (
-        <View className="flex-1 justify-center items-center">
-          <ActivityIndicator size="large" color="#3B82F6" />
-          <Text className="text-gray-600 mt-2">{strings.countries.loadingCountries}</Text>
-        </View>
-      ) : (
-        <FlatList
-          data={countries}
-          keyExtractor={keyExtractor}
-          renderItem={renderItem}
-          contentContainerClassName="py-2"
-          ListEmptyComponent={ListEmptyComponent}
-        />
-      )}
+      <FlatList
+        data={countries}
+        keyExtractor={keyExtractor}
+        renderItem={renderItem}
+        contentContainerClassName="py-2"
+        ListEmptyComponent={ListEmptyComponent}
+      />
     </View>
   );
 };
