@@ -34,7 +34,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
         source={{ uri: source.uri }}
         style={styles.video}
         paused={paused}
-        resizeMode="contain"
+        resizeMode="cover"
         onProgress={(data) => setCurrentTime(data.currentTime)}
         onLoad={(data) => {
           setDuration(data.duration);
