@@ -9,7 +9,7 @@ interface SearchBarProps {
   placeholder?: string;
 }
 
-export const SearchBar: React.FC<SearchBarProps> = ({
+export const SearchBar = React.memo<SearchBarProps>(({
   value,
   onChangeText,
   placeholder = strings.countries.searchPlaceholder,
@@ -39,4 +39,4 @@ export const SearchBar: React.FC<SearchBarProps> = ({
       />
     </View>
   );
-};
+});

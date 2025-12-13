@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { View, FlatList, Text, ActivityIndicator } from 'react-native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useCountries } from '../hooks/useCountries';
@@ -29,9 +29,9 @@ export const CountryListScreen: React.FC<CountryListScreenProps> = ({ navigation
 
   const { continentOptions, currencyOptions } = useFilterOptions(selectedContinent, selectedCurrency);
 
-  const handleCountryPress = (country: Country) => {
+  const handleCountryPress = useCallback((country: Country) => {
     navigation.navigate('CountryDetail', { country });
-  };
+  }, [navigation]);
 
   if (error) {
     return (

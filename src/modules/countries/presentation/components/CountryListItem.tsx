@@ -8,7 +8,7 @@ interface CountryListItemProps {
   onPress: (country: Country) => void;
 }
 
-export const CountryListItem: React.FC<CountryListItemProps> = ({ country, onPress }) => {
+export const CountryListItem = React.memo<CountryListItemProps>(({ country, onPress }) => {
   const [imageLoading, setImageLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
 
@@ -49,4 +49,4 @@ export const CountryListItem: React.FC<CountryListItemProps> = ({ country, onPre
       </View>
     </TouchableOpacity>
   );
-};
+});

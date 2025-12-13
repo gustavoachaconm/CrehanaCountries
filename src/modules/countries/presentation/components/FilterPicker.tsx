@@ -15,7 +15,7 @@ interface FilterPickerProps {
   onSelect: (value: string | null) => void;
 }
 
-export const FilterPicker: React.FC<FilterPickerProps> = ({
+export const FilterPicker = React.memo<FilterPickerProps>(({
   label,
   selectedValue,
   options,
@@ -131,4 +131,4 @@ export const FilterPicker: React.FC<FilterPickerProps> = ({
       </Modal>
     </View>
   );
-};
+});
