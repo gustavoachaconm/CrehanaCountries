@@ -24,7 +24,7 @@ export const CountryListScreen: React.FC<CountryListScreenProps> = ({ navigation
     setSelectedCurrency,
   } = useCountries();
 
-  const { continentOptions, currencyOptions } = useFilterOptions(selectedContinent);
+  const { continentOptions, currencyOptions } = useFilterOptions(selectedContinent, selectedCurrency);
 
   const handleCountryPress = (country: Country) => {
     navigation.navigate('CountryDetail', { country });

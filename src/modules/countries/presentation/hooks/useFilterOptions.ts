@@ -1,12 +1,16 @@
 import { useMemo } from 'react';
 import { useCountriesStore } from './useCountriesStore';
 
-export const useFilterOptions = (selectedContinent?: string | null) => {
+export const useFilterOptions = (selectedContinent?: string | null, selectedCurrency?: string | null) => {
   const countries = useCountriesStore((state) => state.countries);
 
   const continentOptions = useMemo(() => {
     const continents = new Map<string, string>();
-    countries.forEach((country) => {
+    const filteredCountries = selectedCurrency
+      ? countries.filter(country => country.currency === selectedCurrency)
+      : countries;
+    
+    filteredCountries.forEach((country) => {
       if (!continents.has(country.continent.code)) {
         continents.set(country.continent.code, country.continent.name);
       }
@@ -14,7 +18,7 @@ export const useFilterOptions = (selectedContinent?: string | null) => {
     return Array.from(continents.entries())
       .map(([value, label]) => ({ value, label }))
       .sort((a, b) => a.label.localeCompare(b.label));
-  }, [countries]);
+  }, [countries, selectedCurrency]);
 
   const currencyOptions = useMemo(() => {
     const currencies = new Set<string>();
