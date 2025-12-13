@@ -47,13 +47,13 @@ export const CountryListScreen: React.FC<CountryListScreenProps> = ({ navigation
 
       <View className="flex-row px-2 py-2">
         <FilterPicker
-          label="Continent"
+          label="Continente"
           selectedValue={selectedContinent}
           options={continentOptions}
           onSelect={setSelectedContinent}
         />
         <FilterPicker
-          label="Currency"
+          label="Moneda"
           selectedValue={selectedCurrency}
           options={currencyOptions}
           onSelect={setSelectedCurrency}
