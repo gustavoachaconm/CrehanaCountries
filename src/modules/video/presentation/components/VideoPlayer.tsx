@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import Video from 'react-native-video';
 import type { VideoSource } from '../../domain/models';
 
@@ -12,6 +12,8 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
   const [paused, setPaused] = useState(true);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handlePlayPause = () => {
     setPaused(!paused);
@@ -34,14 +36,38 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
         paused={paused}
         resizeMode="contain"
         onProgress={(data) => setCurrentTime(data.currentTime)}
-        onLoad={(data) => setDuration(data.duration)}
+        onLoad={(data) => {
+          setDuration(data.duration);
+          setLoading(false);
+          setError(null);
+        }}
+        onLoadStart={() => setLoading(true)}
+        onError={(e) => {
+          setLoading(false);
+          setError(e.error?.errorString || 'Error al cargar el video');
+          console.error('Video error:', e);
+        }}
       />
+
+      {loading && (
+        <View className="absolute inset-0 items-center justify-center">
+          <ActivityIndicator size="large" color="#ffffff" />
+          <Text className="text-white mt-2">Cargando video...</Text>
+        </View>
+      )}
+
+      {error && (
+        <View className="absolute inset-0 items-center justify-center bg-black/80">
+          <Text className="text-red-400 text-center px-4">Error: {error}</Text>
+        </View>
+      )}
 
       <View className="absolute bottom-0 left-0 right-0 bg-black/70 p-3">
         <View className="flex-row items-center">
           <TouchableOpacity
             className="bg-white/90 rounded-full w-10 h-10 items-center justify-center"
             onPress={handlePlayPause}
+            disabled={loading || !!error}
           >
             <Text className="text-black text-base font-bold">
               {paused ? '▶' : '⏸'}
