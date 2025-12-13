@@ -1,13 +1,10 @@
-const { preset } = require('nativewind/preset');
-
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  presets: [preset],
   content: [
-    './App.{js,jsx,ts,tsx}',
-    './index.{js,jsx,ts,tsx}',
-    './src/**/*.{js,jsx,ts,tsx}'
+    './App.{ts,tsx}',
+    './src/**/*.{ts,tsx}',
+    './components/**/*.{js,jsx,ts,tsx}',
   ],
-  theme: {
-    extend: {}
-  }
+  presets: [require('nativewind/preset')],
+  plugins: [],
 };
