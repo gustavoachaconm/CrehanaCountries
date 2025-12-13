@@ -1,62 +1,34 @@
-import React, { useState, useRef } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet, ActivityIndicator, TouchableWithoutFeedback, GestureResponderEvent } from 'react-native';
-import Video, { VideoRef } from 'react-native-video';
+import React from 'react';
+import { View, TouchableOpacity, Text, StyleSheet, ActivityIndicator, TouchableWithoutFeedback } from 'react-native';
+import Video from 'react-native-video';
 import type { VideoSource } from '../../domain/models';
 import { strings } from '../../../../core/config/i18n';
+import { useVideoPlayer } from '../hooks/useVideoPlayer';
 
 interface VideoPlayerProps {
   source: VideoSource;
 }
 
 export const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
-  const videoRef = useRef<VideoRef>(null);
-  const [paused, setPaused] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [seeking, setSeeking] = useState(false);
-
-  const handlePlayPause = () => {
-    if (source.isLive && paused) {
-      if (videoRef.current) {
-        videoRef.current.seek(0);
-      }
-    }
-    setPaused(!paused);
-  };
-
-  const handleFullscreen = () => {
-    if (videoRef.current) {
-      videoRef.current.presentFullscreenPlayer();
-    }
-  };
-
-  const handleSeek = (event: GestureResponderEvent) => {
-    if (source.isLive || !duration) return;
-    
-    const { locationX } = event.nativeEvent;
-    
-    event.currentTarget.measure((x: number, y: number, width: number) => {
-      const percentage = locationX / width;
-      const seekTime = duration * percentage;
-      
-      setSeeking(true);
-      setCurrentTime(seekTime);
-      
-      if (videoRef.current) {
-        videoRef.current.seek(seekTime);
-      }
-    });
-  };
-
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
-  };
-
-  const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
+  const {
+    videoRef,
+    paused,
+    currentTime,
+    duration,
+    loading,
+    error,
+    seeking,
+    progress,
+    handlePlayPause,
+    handleFullscreen,
+    handleSeek,
+    handleProgress,
+    handleLoad,
+    handleLoadStart,
+    handleError,
+    handleSeekComplete,
+    formatTime,
+  } = useVideoPlayer(source);
 
   return (
     <View className="bg-black rounded-xl overflow-hidden shadow-lg">
@@ -66,23 +38,11 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
         style={styles.video}
         paused={paused}
         resizeMode="cover"
-        onProgress={(data) => {
-          if (!seeking) {
-            setCurrentTime(data.currentTime);
-          }
-        }}
-        onLoad={(data) => {
-          setDuration(data.duration);
-          setLoading(false);
-          setError(null);
-        }}
-        onLoadStart={() => setLoading(true)}
-        onError={(e) => {
-          setLoading(false);
-          setError(e.error?.errorString || 'Error al cargar el video');
-          console.error('Video error:', e);
-        }}
-        onSeek={() => setSeeking(false)}
+        onProgress={handleProgress}
+        onLoad={handleLoad}
+        onLoadStart={handleLoadStart}
+        onError={handleError}
+        onSeek={handleSeekComplete}
       />
 
       {source.isLive && (
