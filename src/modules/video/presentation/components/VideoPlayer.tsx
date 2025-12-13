@@ -79,8 +79,8 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
             disabled={loading || !!error}
             activeOpacity={0.8}
           >
-            <Text className="text-white text-lg font-bold">
-              {paused ? '▶' : '⏸'}
+            <Text className="text-white text-xl font-bold">
+              {paused ? '▶' : '❚❚'}
             </Text>
           </TouchableOpacity>
 
