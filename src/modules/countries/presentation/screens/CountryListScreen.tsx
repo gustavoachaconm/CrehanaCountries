@@ -43,7 +43,6 @@ export const CountryListScreen: React.FC<CountryListScreenProps> = ({ navigation
       <SearchBar
         value={searchQuery}
         onChangeText={setSearchQuery}
-        placeholder="Search by name or code..."
       />
 
       <View className="flex-row px-2 py-2">
