@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { View, FlatList, Text, ActivityIndicator } from 'react-native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useCountries } from '../hooks/useCountries';
@@ -32,6 +32,18 @@ export const CountryListScreen: React.FC<CountryListScreenProps> = ({ navigation
   const handleCountryPress = useCallback((country: Country) => {
     navigation.navigate('CountryDetail', { country });
   }, [navigation]);
+
+  const keyExtractor = useCallback((item: Country) => item.code, []);
+
+  const renderItem = useCallback(({ item }: { item: Country }) => (
+    <CountryListItem country={item} onPress={handleCountryPress} />
+  ), [handleCountryPress]);
+
+  const ListEmptyComponent = useMemo(() => (
+    <View className="flex-1 justify-center items-center py-20">
+      <Text className="text-gray-500 text-base">{strings.countries.noCountriesFound}</Text>
+    </View>
+  ), []);
 
   if (error) {
     return (
@@ -71,16 +83,10 @@ export const CountryListScreen: React.FC<CountryListScreenProps> = ({ navigation
       ) : (
         <FlatList
           data={countries}
-          keyExtractor={(item) => item.code}
-          renderItem={({ item }) => (
-            <CountryListItem country={item} onPress={handleCountryPress} />
-          )}
+          keyExtractor={keyExtractor}
+          renderItem={renderItem}
           contentContainerClassName="py-2"
-          ListEmptyComponent={
-            <View className="flex-1 justify-center items-center py-20">
-              <Text className="text-gray-500 text-base">{strings.countries.noCountriesFound}</Text>
-            </View>
-          }
+          ListEmptyComponent={ListEmptyComponent}
         />
       )}
     </View>
