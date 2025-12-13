@@ -31,31 +31,31 @@ export const CountryDetailScreen: React.FC<CountryDetailScreenProps> = ({ route 
         <Text className="text-lg font-bold text-gray-900 mb-3">Information</Text>
         
         <View className="mb-2">
-          <Text className="text-sm font-semibold text-gray-700">Code</Text>
+          <Text className="text-sm font-semibold text-gray-700">Code:</Text>
           <Text className="text-base text-gray-900">{country.code}</Text>
         </View>
 
         <View className="mb-2">
-          <Text className="text-sm font-semibold text-gray-700">Continent</Text>
+          <Text className="text-sm font-semibold text-gray-700">Continent:</Text>
           <Text className="text-base text-gray-900">{country.continent.name}</Text>
         </View>
 
         {country.capital && (
           <View className="mb-2">
-            <Text className="text-sm font-semibold text-gray-700">Capital</Text>
+            <Text className="text-sm font-semibold text-gray-700">Capital:</Text>
             <Text className="text-base text-gray-900">{country.capital}</Text>
           </View>
         )}
 
         {country.currency && (
           <View className="mb-2">
-            <Text className="text-sm font-semibold text-gray-700">Currency</Text>
+            <Text className="text-sm font-semibold text-gray-700">Currency:</Text>
             <Text className="text-base text-gray-900">{country.currency}</Text>
           </View>
         )}
 
         <View className="mb-2">
-          <Text className="text-sm font-semibold text-gray-700">Languages</Text>
+          <Text className="text-sm font-semibold text-gray-700">Languages:</Text>
           {country.languages.map((lang) => (
             <Text key={lang.code} className="text-base text-gray-900">
               • {lang.name}
