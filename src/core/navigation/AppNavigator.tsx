@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CountryListScreen } from '../../modules/countries/presentation/screens/CountryListScreen';
 import { CountryDetailScreen } from '../../modules/countries/presentation/screens/CountryDetailScreen';
+import { CustomBackButton } from '../components/BackButton';
 import type { RootStackParamList } from './types';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -20,6 +21,7 @@ export const AppNavigator: React.FC = () => {
           headerTitleStyle: {
             fontWeight: 'bold',
           },
+          headerBackVisible: false,
         }}
       >
         <Stack.Screen
@@ -30,7 +32,10 @@ export const AppNavigator: React.FC = () => {
         <Stack.Screen
           name="CountryDetail"
           component={CountryDetailScreen}
-          options={{ title: 'Detalles del país' }}
+          options={{ 
+            title: 'Detalles del país',
+            headerLeft: (props) => <CustomBackButton {...props} />,
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
