@@ -97,19 +97,8 @@ npm install
 ### Configuración (solo en macOS)
 
 ```bash
-# Instalar Ruby bundler (solo primera vez)
-bundle install
-
 # Instalar CocoaPods dependencies
-cd ios && bundle exec pod install && cd ..
-```
-
-## Ejecución
-
-### Iniciar Metro Bundler
-
-```bash
-npm start
+cd ios && pod install && cd ..
 ```
 
 ### Compilar y Ejecutar
